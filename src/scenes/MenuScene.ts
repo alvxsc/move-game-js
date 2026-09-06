@@ -1,0 +1,45 @@
+import '../style.css';
+import { StartGame } from '../components/ui.ts';
+
+const app = document.querySelector<HTMLDivElement>('#app')!;
+
+export const renderMenu = () => {
+  app.innerHTML = `
+    <section id="center">
+      <h1>Move Game</h1>
+      <p>Click the button below to start the game.</p>
+
+      <div id="ui-options">
+        <button id="ui-start" type="button" class="init-ui">
+          Start
+        </button>
+
+        <button id="ui-loading" type="button" class="init-ui">
+          Loading
+        </button>
+
+        <button id="ui-settings" type="button" class="init-ui">
+          Settings
+        </button>
+      </div>
+    </section>
+
+    <footer>
+      <p>
+        Made with 💜 by
+        <a href="https://github.com/carolalves" target="_blank">
+          Carol Alves
+        </a>
+      </p>
+    </footer>
+  `;
+
+  const startButton =
+    document.querySelector<HTMLButtonElement>('#ui-start');
+
+  if (startButton) {
+    StartGame(startButton);
+  }
+};
+
+

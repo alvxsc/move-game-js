@@ -1,0 +1,1338 @@
+:root {
+  --text: #6b6375;
+  --text-h: #08060d;
+  --bg: #fff;
+  --border: #e5e4e7;
+  --code-bg: #f4f3ec;
+  --accent: #aa3bff;
+  --accent-bg: rgba(170, 59, 255, 0.1);
+  --accent-border: rgba(170, 59, 255, 0.5);
+  --social-bg: rgba(244, 243, 236, 0.5);
+  --shadow:
+    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+
+  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
+  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
+  --mono: ui-monospace, Consolas, monospace;
+
+  font: 18px/145% var(--sans);
+  letter-spacing: 0.18px;
+  color-scheme: light dark;
+  color: var(--text);
+  background: var(--bg);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  @media (max-width: 1024px) {
+    font-size: 16px;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text: #9ca3af;
+    --text-h: #f3f4f6;
+    --bg: #232323;
+    --border: #2e303a;
+    --code-bg: #1f2028;
+    --accent: #c084fc;
+    --accent-bg: rgba(192, 132, 252, 0.15);
+    --accent-border: rgba(192, 132, 252, 0.5);
+    --social-bg: rgba(47, 48, 58, 0.5);
+    --shadow:
+      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
+  }
+
+  #social .button-icon {
+    filter: invert(1) brightness(2);
+  }
+}
+
+body {
+  margin: 0;
+}
+
+h1,
+h2 {
+  font-family: var(--heading);
+  font-weight: 500;
+  color: var(--text-h);
+}
+
+h1 {
+  font-size: 56px;
+  letter-spacing: -1.68px;
+  margin: 32px 0;
+  @media (max-width: 1024px) {
+    font-size: 36px;
+    margin: 20px 0;
+  }
+}
+h2 {
+  font-size: 24px;
+  line-height: 118%;
+  letter-spacing: -0.24px;
+  margin: 0 0 8px;
+  @media (max-width: 1024px) {
+    font-size: 20px;
+  }
+}
+p {
+  margin: 0;
+}
+
+code,
+.counter {
+  font-family: var(--mono);
+  display: inline-flex;
+  border-radius: 4px;
+  color: var(--text-h);
+}
+
+code {
+  font-size: 15px;
+  line-height: 135%;
+  padding: 4px 8px;
+  background: var(--code-bg);
+}
+
+.counter {
+  font-size: 16px;
+  padding: 5px 10px;
+  border-radius: 5px;
+  color: var(--accent);
+  background: var(--accent-bg);
+  border: 2px solid transparent;
+  transition: border-color 0.3s;
+  margin-bottom: 24px;
+
+  &:hover {
+    border-color: var(--accent-border);
+  }
+  &:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+}
+
+.init-ui {
+  font-size: 16px;
+  padding: 5px 10px;
+  border-radius: 5px;
+  color: var(--accent);
+  background: var(--accent-bg);
+  border: 2px solid transparent;
+  transition: border-color 0.3s;
+  margin-bottom: 24px;
+
+  &:hover {
+    border-color: var(--accent-border);
+  }
+  &:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+}
+
+.hero {
+  position: relative;
+
+  .base,
+  .framework,
+  .vite {
+    inset-inline: 0;
+    margin: 0 auto;
+  }
+
+  .base {
+    width: 170px;
+    position: relative;
+    z-index: 0;
+  }
+
+  .framework,
+  .vite {
+    position: absolute;
+  }
+
+  .framework {
+    z-index: 1;
+    top: 34px;
+    height: 28px;
+    transform: perspective(2000px) rotateZ(300deg) rotateX(44deg) rotateY(39deg)
+      scale(1.4);
+  }
+
+  .vite {
+    z-index: 0;
+    top: 107px;
+    height: 26px;
+    width: auto;
+    transform: perspective(2000px) rotateZ(300deg) rotateX(40deg) rotateY(39deg)
+      scale(0.8);
+  }
+}
+
+#app {
+  width: 1126px;
+  max-width: 100%;
+  margin: 0 auto;
+  text-align: center;
+  border-inline: 1px solid var(--border);
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+#center {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  place-content: center;
+  place-items: center;
+  flex-grow: 1;
+
+  @media (max-width: 1024px) {
+    padding: 32px 20px 24px;
+    gap: 18px;
+  }
+}
+
+#next-steps {
+  display: flex;
+  border-top: 1px solid var(--border);
+  text-align: left;
+
+  & > div {
+    flex: 1 1 0;
+    padding: 32px;
+    @media (max-width: 1024px) {
+      padding: 24px 20px;
+    }
+  }
+
+  .icon {
+    margin-bottom: 16px;
+    width: 22px;
+    height: 22px;
+  }
+
+  @media (max-width: 1024px) {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+#docs {
+  border-right: 1px solid var(--border);
+
+  @media (max-width: 1024px) {
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+  }
+}
+
+#next-steps ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  gap: 8px;
+  margin: 32px 0 0;
+
+  .logo {
+    height: 18px;
+  }
+
+  a {
+    color: var(--text-h);
+    font-size: 16px;
+    border-radius: 6px;
+    background: var(--social-bg);
+    display: flex;
+    padding: 6px 12px;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    transition: box-shadow 0.3s;
+
+    &:hover {
+      box-shadow: var(--shadow);
+    }
+    .button-icon {
+      height: 18px;
+      width: 18px;
+    }
+  }
+
+  @media (max-width: 1024px) {
+    margin-top: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    li {
+      flex: 1 1 calc(50% - 8px);
+    }
+
+    a {
+      width: 100%;
+      justify-content: center;
+      box-sizing: border-box;
+    }
+  }
+}
+
+#spacer {
+  height: 88px;
+  border-top: 1px solid var(--border);
+  @media (max-width: 1024px) {
+    height: 48px;
+  }
+}
+
+.ticks {
+  position: relative;
+  width: 100%;
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    top: -4.5px;
+    border: 5px solid transparent;
+  }
+
+  &::before {
+    left: 0;
+    border-left-color: var(--border);
+  }
+  &::after {
+    right: 0;
+    border-right-color: var(--border);
+  }
+}
+
+/* New Elements */
+#game-container {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+#output_canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+}
+
+.game-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  text-align: center;
+  color: white;
+  background: rgba(0, 0, 0, 0.65);
+  padding: 30px;
+  border-radius: 16px;
+  backdrop-filter: blur(5px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+#status-checks {
+  margin: 20px 0;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.badge {
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+.active-false {
+  background-color: #ff4d4d;
+  color: white;
+}
+
+.active-true {
+  background-color: #2ecc71;
+  color: white;
+  animation: pulse 1s infinite alternate;
+}
+
+@keyframes pulse {
+  from { transform: scale(1); }
+  to { transform: scale(1.05); }
+}
+
+.loading-container {
+  width: 300px;
+  margin: 20px auto;
+  text-align: center;
+}
+
+.loading-bar {
+  width: 100%;
+  height: 12px;
+  background: #333;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+#loading-progress {
+  width: 0%;
+  height: 100%;
+  background: #a855f7;
+  border-radius: 10px;
+  transition: width 0.1s ease;
+}
+
+#loading-text {
+  display: block;
+  margin-top: 8px;
+}
+
+/* Camera Check Styles */
+
+#game {
+  width: 100vw;
+  height: 100vh;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #111;
+  color: white;
+
+  overflow: hidden;
+}
+
+#camera-check {
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  gap: 24px;
+}
+
+.camera-container {
+  position: relative;
+
+  width: min(80vw, 900px);
+  aspect-ratio: 16 / 9;
+
+  background: #222;
+
+  border-radius: 20px;
+
+  overflow: hidden;
+
+  box-shadow:
+    0 0 0 2px rgba(168, 85, 247, 0.5),
+    0 0 40px rgba(168, 85, 247, 0.2);
+}
+
+#player-camera {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  transform: scaleX(-1);
+}
+
+.camera-overlay {
+  position: absolute;
+
+  inset: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  pointer-events: none;
+}
+
+/* Body Frame Styles */
+.body-frame {
+  width: 35%;
+  height: 85%;
+
+  border: 3px dashed rgba(255, 255, 255, 0.7);
+
+  border-radius: 45% 45% 20% 20%;
+
+  box-shadow:
+    0 0 20px rgba(255, 255, 255, 0.15);
+}
+
+/* Camera Message Styles */
+.camera-message {
+  text-align: center;
+
+  max-width: 600px;
+
+  padding: 0 20px;
+}
+
+.camera-message h1 {
+  margin: 0 0 8px;
+
+  font-size: clamp(28px, 4vw, 48px);
+}
+
+.camera-message p {
+  margin: 0;
+
+  color: #ccc;
+
+  font-size: clamp(16px, 2vw, 20px);
+}
+
+.thumb-progress {
+  width: min(400px, 70vw);
+  height: 10px;
+
+  margin: 24px auto 8px;
+
+  background: #333;
+
+  border-radius: 999px;
+
+  overflow: hidden;
+}
+
+#thumb-progress-bar {
+  width: 0%;
+  height: 100%;
+
+  background: #a855f7;
+
+  border-radius: inherit;
+
+  transition: width 0.1s linear;
+}
+
+#thumb-countdown {
+  display: block;
+
+  font-size: 18px;
+
+  color: #aaa;
+}
+
+/* Body Frame Styles */
+.body-frame {
+  width: 35%;
+  height: 85%;
+
+  border: 3px dashed rgba(218, 62, 62, 0.7);
+
+  border-radius: 45% 45% 20% 20%;
+
+  box-shadow:
+    0 0 20px rgba(255, 255, 255, 0.15);
+
+  transition:
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.body-frame.body-ready {
+  border-color: #22c55e;
+
+  box-shadow:
+    0 0 30px rgba(34, 197, 94, 0.5);
+}
+
+#game-play {
+  position: relative;
+
+  width: 100vw;
+  height: 100vh;
+
+  background: #0b0b0f;
+
+  overflow: hidden;
+}
+
+
+
+#game-play {
+  position: relative;
+
+  width: 100vw;
+  height: 100vh;
+
+  background: #0b0b0f;
+
+  overflow: hidden;
+}
+
+
+#movement-video {
+  width: 100%;
+  height: 100%;
+
+  object-fit: contain;
+}
+
+
+#player-camera-small {
+  position: absolute;
+
+  right: 24px;
+  bottom: 24px;
+
+  width: 220px;
+  aspect-ratio: 16 / 9;
+
+  background: #18181b;
+
+  border-radius: 16px;
+
+  overflow: hidden;
+
+  border: 3px solid #a855f7;
+
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.5);
+
+  z-index: 10;
+}
+
+#player-camera-preview {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  transform: scaleX(-1);
+}
+
+
+.camera-label {
+  position: absolute;
+
+  left: 10px;
+  bottom: 8px;
+
+  padding: 4px 8px;
+
+  background: rgba(0, 0, 0, 0.6);
+
+  border-radius: 6px;
+
+  font-size: 12px;
+
+  font-weight: bold;
+}
+
+
+#movement-progress {
+  position: absolute;
+
+  left: 20px;
+  right: 20px;
+  bottom: 20px;
+
+  height: 6px;
+
+  background: rgba(255, 255, 255, 0.2);
+
+  border-radius: 999px;
+
+  overflow: hidden;
+
+  z-index: 5;
+}
+
+#movement-progress-bar {
+  width: 0%;
+  height: 100%;
+
+  background: #a855f7;
+
+  border-radius: inherit;
+
+  transition: width 0.1s linear;
+}
+
+
+
+/* ==========================================
+   GAMEPLAY
+   ========================================== */
+
+#game-play {
+  position: relative;
+
+  width: 100vw;
+  height: 100vh;
+
+  background: #0b0b0f;
+
+  overflow: hidden;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+/* ==========================================
+   ÁREA DO MOVIMENTO
+   ========================================== */
+
+#movement-area {
+  width: 100%;
+  height: 100%;
+
+  padding: 24px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  box-sizing: border-box;
+}
+
+
+/* ==========================================
+   CONTAINER DO VÍDEO
+   ========================================== */
+
+#movement-video-container {
+  position: relative;
+
+  width: 100%;
+  height: 100%;
+
+  max-width: 1400px;
+  max-height: calc(100vh - 48px);
+
+  background: #18181b;
+
+  border-radius: 24px;
+
+  overflow: hidden;
+
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.45);
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+/* ==========================================
+   VÍDEO
+   ========================================== */
+
+#movement-video {
+  width: 100%;
+  height: 100%;
+
+  /*
+   * O vídeo preenche todo o container.
+   * Em telas menores ele poderá cortar as
+   * laterais para manter o centro visível.
+   */
+  object-fit: cover;
+
+  object-position: center;
+
+  display: block;
+}
+
+
+/* ==========================================
+   BARRA DE PROGRESSO
+   ========================================== */
+
+#movement-progress {
+  position: absolute;
+
+  left: 20px;
+  right: 20px;
+  bottom: 18px;
+
+  height: 5px;
+
+  background: rgba(255, 255, 255, 0.18);
+
+  border-radius: 999px;
+
+  overflow: hidden;
+
+  z-index: 5;
+
+  backdrop-filter: blur(4px);
+}
+
+
+#movement-progress-bar {
+  width: 0%;
+  height: 100%;
+
+  background: #a855f7;
+
+  border-radius: inherit;
+
+  transition: width 0.1s linear;
+}
+
+
+/* ==========================================
+   CÂMERA DO JOGADOR
+   ========================================== */
+
+#player-camera-small {
+  position: absolute;
+
+  right: 32px;
+  bottom: 32px;
+
+  width: 220px;
+  aspect-ratio: 16 / 9;
+
+  background: #18181b;
+
+  border-radius: 16px;
+
+  overflow: hidden;
+
+  border: 3px solid #a855f7;
+
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.55);
+
+  z-index: 10;
+}
+
+
+#player-camera-preview {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  /*
+   * Espelhamos a câmera para ficar
+   * mais natural para o jogador.
+   */
+  transform: scaleX(-1);
+
+  display: block;
+}
+
+
+.camera-label {
+  position: absolute;
+
+  left: 10px;
+  bottom: 8px;
+
+  padding: 4px 8px;
+
+  background: rgba(0, 0, 0, 0.65);
+
+  border-radius: 6px;
+
+  color: white;
+
+  font-size: 12px;
+
+  font-weight: 700;
+
+  letter-spacing: 0.5px;
+}
+
+
+/* ==========================================
+   MOBILE
+   ========================================== */
+
+@media (max-width: 768px) {
+
+  #movement-area {
+    padding: 0;
+  }
+
+
+  #movement-video-container {
+    width: 100%;
+    height: 100%;
+
+    max-width: none;
+    max-height: none;
+
+    border-radius: 0;
+
+    border: none;
+
+    box-shadow: none;
+  }
+
+
+  #movement-video {
+    /*
+     * No mobile queremos preencher
+     * completamente a tela.
+     *
+     * Como o vídeo provavelmente é 16:9
+     * e o celular é mais estreito/alto,
+     * as laterais serão cortadas.
+     */
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    object-position: center;
+  }
+
+
+  #movement-progress {
+    left: 16px;
+    right: 16px;
+    bottom: 16px;
+
+    height: 4px;
+  }
+
+
+  #player-camera-small {
+    right: 16px;
+    bottom: 32px;
+
+    width: 130px;
+
+    border-width: 2px;
+
+    border-radius: 12px;
+  }
+
+
+  .camera-label {
+    left: 7px;
+    bottom: 6px;
+
+    padding: 3px 6px;
+
+    font-size: 9px;
+  }
+}
+
+
+/* ==========================================
+   IDENTIFICAÇÃO DO JOGADOR
+   ========================================== */
+
+#player-identification {
+  position: relative;
+
+  width: 100vw;
+  height: 100vh;
+
+  background: #08080b;
+
+  color: white;
+
+  overflow: hidden;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+}
+
+
+/* ==========================================
+   HEADER
+   ========================================== */
+
+#identification-header {
+  position: absolute;
+
+  top: 24px;
+
+  left: 0;
+  right: 0;
+
+  z-index: 10;
+
+  text-align: center;
+
+  pointer-events: none;
+
+  text-shadow:
+    0 2px 10px rgba(0, 0, 0, 0.7);
+}
+
+
+#identification-header h1 {
+  margin: 0;
+
+  font-size: clamp(28px, 4vw, 48px);
+}
+
+
+#identification-status {
+  margin: 8px 0 0;
+
+  font-size: clamp(14px, 2vw, 20px);
+
+  color: rgba(255, 255, 255, 0.85);
+}
+
+
+/* ==========================================
+   ÁREA DA CÂMERA
+   ========================================== */
+
+#identification-camera-area {
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+}
+
+
+/* ==========================================
+   CONTAINER DA CÂMERA
+   ========================================== */
+
+#identification-camera-container {
+  position: relative;
+
+  width: 100%;
+  height: 100%;
+
+  overflow: hidden;
+
+  background: #111113;
+}
+
+
+/* ==========================================
+   VÍDEO DA CÂMERA
+   ========================================== */
+
+#player-camera {
+  width: 100%;
+  height: 100%;
+
+  display: block;
+
+  /*
+   * A câmera ocupa toda a tela.
+   * Se necessário, as bordas são cortadas.
+   */
+  object-fit: cover;
+
+  /*
+   * Mantemos o jogador no centro.
+   */
+  object-position: center;
+
+  /*
+   * Espelhamento natural da câmera.
+   */
+  transform: scaleX(-1);
+}
+
+
+/* ==========================================
+   OVERLAY
+   ========================================== */
+
+#camera-overlay {
+  position: absolute;
+
+  inset: 0;
+
+  pointer-events: none;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+}
+
+
+/* ==========================================
+   GUIA DO CORPO
+   ========================================== */
+
+#body-frame {
+  width: min(45vw, 380px);
+
+  height: 75vh;
+
+  max-height: 700px;
+
+  border: 3px dashed rgba(168, 85, 247, 0.75);
+
+  border-radius: 45% 45% 20% 20%;
+
+  box-shadow:
+    0 0 30px rgba(168, 85, 247, 0.15);
+
+  opacity: 0.8;
+}
+
+
+/* ==========================================
+   INSTRUÇÃO DO JOINHA
+   ========================================== */
+
+#thumb-instruction {
+  position: absolute;
+
+  left: 50%;
+  bottom: 70px;
+
+  transform: translateX(-50%);
+
+  z-index: 10;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 14px;
+
+  padding: 12px 20px;
+
+  background: rgba(0, 0, 0, 0.65);
+
+  backdrop-filter: blur(10px);
+
+  border: 1px solid rgba(255, 255, 255, 0.12);
+
+  border-radius: 14px;
+
+  white-space: nowrap;
+}
+
+
+#thumb-icon {
+  font-size: 32px;
+}
+
+
+#thumb-instruction strong {
+  display: block;
+
+  font-size: 16px;
+}
+
+
+#thumb-instruction p {
+  margin: 3px 0 0;
+
+  font-size: 13px;
+
+  color: rgba(255, 255, 255, 0.7);
+}
+
+
+/* ==========================================
+   PROGRESSO
+   ========================================== */
+
+#thumb-progress {
+  position: absolute;
+
+  left: 50%;
+  bottom: 30px;
+
+  transform: translateX(-50%);
+
+  width: min(400px, 70vw);
+
+  height: 6px;
+
+  background: rgba(255, 255, 255, 0.2);
+
+  border-radius: 999px;
+
+  overflow: hidden;
+
+  z-index: 10;
+}
+
+
+#thumb-progress-bar {
+  width: 0%;
+
+  height: 100%;
+
+  background: #a855f7;
+
+  border-radius: inherit;
+
+  transition: width 0.1s linear;
+}
+
+
+/* ==========================================
+   CONTADOR
+   ========================================== */
+
+#identification-footer {
+  position: absolute;
+
+  top: 50%;
+  left: 50%;
+
+  transform: translate(-50%, -50%);
+
+  z-index: 10;
+
+  pointer-events: none;
+}
+
+
+#thumb-countdown {
+  font-size: clamp(40px, 8vw, 80px);
+
+  font-weight: 800;
+
+  color: white;
+
+  text-shadow:
+    0 4px 20px rgba(0, 0, 0, 0.8);
+}
+
+
+/* ==========================================
+   MOBILE
+   ========================================== */
+
+@media (max-width: 768px) {
+
+  #identification-header {
+    top: 16px;
+  }
+
+
+  #identification-status {
+    padding: 0 20px;
+  }
+
+
+  #body-frame {
+    width: 65vw;
+
+    height: 72vh;
+
+    max-height: none;
+
+    border-width: 2px;
+  }
+
+
+  #thumb-instruction {
+    bottom: 55px;
+
+    width: auto;
+
+    max-width: calc(100vw - 32px);
+
+    padding: 10px 14px;
+
+    gap: 10px;
+  }
+
+
+  #thumb-icon {
+    font-size: 26px;
+  }
+
+
+  #thumb-instruction strong {
+    font-size: 14px;
+  }
+
+
+  #thumb-instruction p {
+    font-size: 11px;
+  }
+
+
+  #thumb-progress {
+    bottom: 24px;
+
+    width: calc(100vw - 40px);
+
+    height: 5px;
+  }
+}
+
+
+/* ==========================================
+   MOBILE LANDSCAPE
+   ========================================== */
+
+@media (max-width: 768px) and (orientation: landscape) {
+
+  #identification-header {
+    top: 10px;
+  }
+
+
+  #identification-header h1 {
+    font-size: 24px;
+  }
+
+
+  #identification-status {
+    margin-top: 2px;
+
+    font-size: 13px;
+  }
+
+
+  #body-frame {
+    width: 30vw;
+
+    height: 80vh;
+  }
+
+
+  #thumb-instruction {
+    bottom: 32px;
+
+    padding: 8px 14px;
+  }
+
+
+  #thumb-progress {
+    bottom: 12px;
+  }
+}
