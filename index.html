@@ -9,20 +9,23 @@
     <script src="https://cdn.jsdelivr.net/npm/@mediapipe/pose/pose.js" crossorigin="anonymous"></script>
     <script>
       window.__onGCastApiAvailable = function(isAvailable) {
-        if (isAvailable) {
-          console.log('📺 Google Cast SDK disponível');
+      
+        console.log(
+          '📺 Google Cast disponível:',
+          isAvailable
+        );
+      
+        window.dispatchEvent(
+          new CustomEvent('google-cast-available', {
+            detail: {
+              available: isAvailable
+            }
+          })
+        );
         
-          window.dispatchEvent(
-            new CustomEvent('google-cast-available')
-          );
-        } else {
-          console.warn(
-            '⚠️ Google Cast não está disponível neste navegador'
-          );
-        }
       };
     </script>
-    
+
     <script
       src="https://www.gstatic.com/cv/js/sender/v1/cast_sender.js?loadCastFramework=1"
     ></script>

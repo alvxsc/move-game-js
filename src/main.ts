@@ -7,18 +7,24 @@ import { renderGamePlay } from './scenes/GameScene.ts';
 
 import { initializeCast } from './cast/CastManager.ts';
 
-// ==========================================
-// GOOGLE CAST
-// ==========================================
+/* ==========================================
+   GOOGLE CAST
+   ========================================== */
 
 window.addEventListener(
   'google-cast-available',
-  () => {
+  (event) => {
+
+    console.log(
+      '📺 Evento Google Cast recebido:',
+      event
+    );
 
     initializeCast();
 
   }
 );
+
 
 function router() {
   const path = window.location.pathname;

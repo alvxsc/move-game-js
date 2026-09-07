@@ -1388,3 +1388,60 @@ code {
 
   cursor: pointer;
 }
+
+
+/* ==========================================
+   GOOGLE CAST
+   ========================================== */
+
+#cast-container {
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 10px;
+
+  margin-top: 24px;
+
+  min-height: 48px;
+
+  color:
+    rgba(255, 255, 255, 0.85);
+
+}
+
+
+/*
+ * O Google Cast transforma esse elemento
+ * em um botão.
+ */
+
+#ui-cast {
+
+  display: inline-block;
+
+  width: 42px;
+  height: 42px;
+
+  cursor: pointer;
+
+  --disconnected-color: #ffffff;
+  --connected-color: #a855f7;
+
+}
+
+
+/*
+ * Evita que regras globais de button
+ * do projeto escondam o Cast launcher.
+ */
+
+google-cast-launcher {
+
+  visibility: visible;
+
+  opacity: 1;
+
+}

@@ -20,5 +20,8 @@
     "erasableSyntaxOnly": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src", "public/receiver"]
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.d.ts", 
+    "public/receiver"]
 }

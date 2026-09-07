@@ -2,17 +2,87 @@ let castReady = false;
 
 const RECEIVER_APP_ID = 'F37D7BA1';
 
-
-// ==========================================
-// NAMESPACE DA NOSSA APLICAÇÃO
-// ==========================================
-
 export const CAST_NAMESPACE =
   'urn:x-cast:com.movegame.game';
 
 
 // ==========================================
-// INICIALIZA GOOGLE CAST
+// TIPOS
+// ==========================================
+
+interface CastSession {
+  sendMessage(
+    namespace: string,
+    message: unknown
+  ): Promise<void>;
+
+  endSession(
+    stopCasting: boolean
+  ): void;
+}
+
+
+interface CastContext {
+  setOptions(
+    options: CastOptions
+  ): void;
+
+  getCurrentSession():
+    CastSession | null;
+
+  endCurrentSession(
+    stopCasting: boolean
+  ): void;
+}
+
+
+interface CastOptions {
+  receiverApplicationId: string;
+
+  autoJoinPolicy?: unknown;
+}
+
+
+interface CastFramework {
+
+  CastContext: {
+    getInstance(): CastContext;
+  };
+
+  CastOptions: new () => CastOptions;
+
+}
+
+
+function getCastFramework():
+  CastFramework | null {
+
+  const cast =
+    (window as unknown as {
+      cast?: {
+        framework?: CastFramework;
+      };
+    }).cast;
+
+
+  if (!cast?.framework) {
+
+    console.warn(
+      '⚠️ Google Cast Framework ainda não está disponível.'
+    );
+
+    return null;
+
+  }
+
+
+  return cast.framework;
+
+}
+
+
+// ==========================================
+// INICIALIZAR CAST
 // ==========================================
 
 export function initializeCast() {
@@ -21,39 +91,51 @@ export function initializeCast() {
     return;
   }
 
-  if (
-    typeof window === 'undefined' ||
-    !window.cast
-  ) {
-    console.warn(
-      '⚠️ Google Cast SDK ainda não está disponível.'
-    );
 
+  console.log(
+    '📺 Inicializando Google Cast...'
+  );
+
+
+  const framework =
+    getCastFramework();
+
+
+  if (!framework) {
     return;
   }
+
 
   try {
 
     const context =
-      window.cast.framework.CastContext.getInstance();
+      framework.CastContext.getInstance();
 
 
-    context.setOptions({
+    const options =
+      new framework.CastOptions();
 
-      receiverApplicationId:
-        RECEIVER_APP_ID,
 
-      autoJoinPolicy:
-        window.chrome.cast.AutoJoinPolicy.ORIGIN_SCOPED
+    options.receiverApplicationId =
+      RECEIVER_APP_ID;
 
-    });
+
+    context.setOptions(
+      options
+    );
 
 
     castReady = true;
 
 
     console.log(
-      '📺 Google Cast inicializado'
+      '✅ Google Cast inicializado'
+    );
+
+
+    console.log(
+      '📺 Receiver:',
+      RECEIVER_APP_ID
     );
 
 
@@ -65,11 +147,12 @@ export function initializeCast() {
     );
 
   }
+
 }
 
 
 // ==========================================
-// VERIFICAR SE CAST ESTÁ DISPONÍVEL
+// VERIFICAR DISPONIBILIDADE
 // ==========================================
 
 export function isCastAvailable(): boolean {
@@ -80,17 +163,24 @@ export function isCastAvailable(): boolean {
 
 
 // ==========================================
-// OBTER SESSÃO ATUAL
+// SESSÃO ATUAL
 // ==========================================
 
-export function getCastSession() {
+export function getCastSession():
+  CastSession | null {
 
-  if (!castReady) {
+  const framework =
+    getCastFramework();
+
+
+  if (!framework || !castReady) {
     return null;
   }
 
+
   const context =
-    window.cast.framework.CastContext.getInstance();
+    framework.CastContext.getInstance();
+
 
   return context.getCurrentSession();
 
@@ -98,68 +188,7 @@ export function getCastSession() {
 
 
 // ==========================================
-// CONECTAR AO RECEIVER
-// ==========================================
-
-export async function startCastSession() {
-
-  if (!castReady) {
-
-    console.warn(
-      '⚠️ Google Cast ainda não foi inicializado.'
-    );
-
-    return null;
-  }
-
-
-  try {
-
-    const context =
-      window.cast.framework.CastContext.getInstance();
-
-
-    await context.requestSession();
-
-
-    const session =
-      context.getCurrentSession();
-
-
-    if (!session) {
-
-      console.warn(
-        '⚠️ Sessão Cast não foi criada.'
-      );
-
-      return null;
-    }
-
-
-    console.log(
-      '📺 Conectado ao Move Game Receiver!'
-    );
-
-
-    return session;
-
-
-  } catch (error) {
-
-    console.error(
-      '❌ Erro ao conectar ao Chromecast:',
-      error
-    );
-
-    return null;
-
-  }
-
-}
-
-
-// ==========================================
-// ENVIAR MENSAGEM PARA A TV
+// ENVIAR MENSAGEM
 // ==========================================
 
 export async function sendCastMessage(
@@ -190,7 +219,7 @@ export async function sendCastMessage(
 
 
     console.log(
-      '📤 Mensagem enviada para a TV:',
+      '📤 Mensagem enviada para TV:',
       message
     );
 
@@ -198,7 +227,7 @@ export async function sendCastMessage(
   } catch (error) {
 
     console.error(
-      '❌ Erro ao enviar mensagem para a TV:',
+      '❌ Erro ao enviar mensagem para TV:',
       error
     );
 
@@ -213,28 +242,26 @@ export async function sendCastMessage(
 
 export function stopCasting() {
 
-  if (!castReady) {
+  const framework =
+    getCastFramework();
+
+
+  if (!framework || !castReady) {
     return;
   }
 
 
   const context =
-    window.cast.framework.CastContext.getInstance();
+    framework.CastContext.getInstance();
 
 
-  const session =
-    context.getCurrentSession();
+  context.endCurrentSession(
+    true
+  );
 
 
-  if (session) {
-
-    session.endSession(true);
-
-
-    console.log(
-      '📺 Transmissão encerrada'
-    );
-
-  }
+  console.log(
+    '📺 Cast encerrado'
+  );
 
 }
