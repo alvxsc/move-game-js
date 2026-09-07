@@ -1,6 +1,5 @@
 import '../style.css';
 import { StartGame } from '../components/ui.ts';
-import { initializeCast } from '../cast/CastManager.ts';
 
 const app = document.querySelector<HTMLDivElement>('#app')!;
 
