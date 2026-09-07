@@ -1,7 +1,8 @@
 let castReady = false;
 
-const DEFAULT_RECEIVER_APP_ID =
-  'CC1AD845';
+const RECEIVER_APP_ID =
+  'A1B2C3D4';
+  'F37D7BA1'; // Substitua pelo ID do seu aplicativo receptor personalizado, se necessário
 
 export function initializeCast() {
 
@@ -27,7 +28,8 @@ export function initializeCast() {
 
     context.setOptions({
       receiverApplicationId:
-        DEFAULT_RECEIVER_APP_ID,
+        RECEIVER_APP_ID,
+
 
       autoJoinPolicy:
         window.chrome.cast.AutoJoinPolicy.ORIGIN_SCOPED
