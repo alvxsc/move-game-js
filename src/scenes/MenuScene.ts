@@ -1,6 +1,11 @@
 import '../style.css';
 import { StartGame } from '../components/ui.ts';
 
+import {
+  sendCastMessage
+} from '../cast/CastManager.ts';
+
+
 const app = document.querySelector<HTMLDivElement>('#app')!;
 
 export const renderMenu = () => {
@@ -36,6 +41,7 @@ export const renderMenu = () => {
         </span>
 
       </div>
+
     </section>
 
     <footer>
@@ -47,6 +53,17 @@ export const renderMenu = () => {
       </p>
     </footer>
   `;
+
+  document
+  .querySelector<HTMLButtonElement>('#ui-cast-test')
+  ?.addEventListener('click', () => {
+
+    sendCastMessage({
+      type: 'GAME_START'
+    });
+
+  });
+
 
   const startButton =
     document.querySelector<HTMLButtonElement>('#ui-start');

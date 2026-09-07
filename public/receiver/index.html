@@ -1,27 +1,36 @@
 <!DOCTYPE html>
+
 <html lang="pt-BR">
+
 <head>
-  <meta charset="UTF-8" />
+
+  <meta charset="UTF-8">
 
   <meta
     name="viewport"
     content="width=device-width, initial-scale=1.0"
-  />
+  >
 
   <title>Move Game TV</title>
 
+
   <style>
+
     * {
       box-sizing: border-box;
     }
 
+
     html,
     body {
+
       margin: 0;
+
       width: 100%;
       height: 100%;
 
       background: #08080b;
+
       color: white;
 
       font-family:
@@ -30,58 +39,208 @@
         sans-serif;
 
       overflow: hidden;
+
     }
 
+
     #receiver {
+
       width: 100%;
       height: 100%;
 
       display: flex;
+
       align-items: center;
       justify-content: center;
 
       text-align: center;
+
     }
 
+
     #content {
+
       display: flex;
+
       flex-direction: column;
 
       align-items: center;
+
       gap: 20px;
+
     }
 
+
     h1 {
+
       margin: 0;
 
       font-size: 64px;
 
       color: #a855f7;
+
     }
 
+
     p {
+
       margin: 0;
 
       font-size: 28px;
 
-      color: rgba(255, 255, 255, 0.8);
+      color:
+        rgba(255, 255, 255, 0.8);
+
     }
+
   </style>
+
 </head>
 
+
 <body>
+
 
   <main id="receiver">
 
     <div id="content">
 
-      <h1>Move Game</h1>
+      <h1>
+        Move Game
+      </h1>
 
-      <p>Conectado à TV 🎮</p>
+      <p id="status">
+        Aguardando conexão...
+      </p>
 
     </div>
 
   </main>
 
+
+  <!-- Google Cast Receiver Framework -->
+
+  <script
+    src="//www.gstatic.com/cast/sdk/libs/caf_receiver/v3/cast_receiver_framework.js"
+  ></script>
+
+
+  <script>
+
+    const CAST_NAMESPACE =
+      'urn:x-cast:com.movegame.game';
+
+
+    // ==========================================
+    // INICIALIZA RECEIVER
+    // ==========================================
+
+    const context =
+      cast.framework.CastReceiverContext.getInstance();
+
+
+    // ==========================================
+    // RECEBER MENSAGENS
+    // ==========================================
+
+    context.addCustomMessageListener(
+      CAST_NAMESPACE,
+
+      function(event) {
+
+        console.log(
+          '📥 Mensagem recebida:',
+          event.data
+        );
+
+
+        const data =
+          typeof event.data === 'string'
+            ? JSON.parse(event.data)
+            : event.data;
+
+
+        handleGameMessage(data);
+
+      }
+    );
+
+
+    // ==========================================
+    // PROCESSAR MENSAGEM
+    // ==========================================
+
+    function handleGameMessage(data) {
+
+      const status =
+        document.querySelector('#status');
+
+
+      if (!status) {
+        return;
+      }
+
+
+      switch (data.type) {
+
+
+        case 'GAME_START':
+
+          status.textContent =
+            'Jogo iniciado! 🎮';
+
+          break;
+
+
+        case 'PLAYER_READY':
+
+          status.textContent =
+            'Jogador preparado! 👍';
+
+          break;
+
+
+        case 'MOVEMENT_START':
+
+          status.textContent =
+            `Movimento ${data.movement} ▶`;
+
+          break;
+
+
+        case 'SCORE_UPDATE':
+
+          status.textContent =
+            `Pontuação: ${data.score}`;
+
+          break;
+
+
+        default:
+
+          console.log(
+            'Mensagem desconhecida:',
+            data
+          );
+
+      }
+
+    }
+
+
+    // ==========================================
+    // INICIAR RECEIVER
+    // ==========================================
+
+    context.start();
+
+    console.log(
+      '📺 Move Game Receiver iniciado'
+    );
+
+  </script>
+
+
 </body>
+
 </html>

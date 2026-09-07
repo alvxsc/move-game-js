@@ -1,8 +1,19 @@
 let castReady = false;
 
-const RECEIVER_APP_ID =
-  'A1B2C3D4';
-  'F37D7BA1'; // Substitua pelo ID do seu aplicativo receptor personalizado, se necessário
+const RECEIVER_APP_ID = 'F37D7BA1';
+
+
+// ==========================================
+// NAMESPACE DA NOSSA APLICAÇÃO
+// ==========================================
+
+export const CAST_NAMESPACE =
+  'urn:x-cast:com.movegame.game';
+
+
+// ==========================================
+// INICIALIZA GOOGLE CAST
+// ==========================================
 
 export function initializeCast() {
 
@@ -26,20 +37,25 @@ export function initializeCast() {
     const context =
       window.cast.framework.CastContext.getInstance();
 
+
     context.setOptions({
+
       receiverApplicationId:
         RECEIVER_APP_ID,
 
-
       autoJoinPolicy:
         window.chrome.cast.AutoJoinPolicy.ORIGIN_SCOPED
+
     });
 
+
     castReady = true;
+
 
     console.log(
       '📺 Google Cast inicializado'
     );
+
 
   } catch (error) {
 
@@ -52,14 +68,40 @@ export function initializeCast() {
 }
 
 
+// ==========================================
+// VERIFICAR SE CAST ESTÁ DISPONÍVEL
+// ==========================================
+
 export function isCastAvailable(): boolean {
+
   return castReady;
+
 }
 
 
-export async function startCasting(
-  videoUrl: string
-) {
+// ==========================================
+// OBTER SESSÃO ATUAL
+// ==========================================
+
+export function getCastSession() {
+
+  if (!castReady) {
+    return null;
+  }
+
+  const context =
+    window.cast.framework.CastContext.getInstance();
+
+  return context.getCurrentSession();
+
+}
+
+
+// ==========================================
+// CONECTAR AO RECEIVER
+// ==========================================
+
+export async function startCastSession() {
 
   if (!castReady) {
 
@@ -67,53 +109,107 @@ export async function startCasting(
       '⚠️ Google Cast ainda não foi inicializado.'
     );
 
-    return;
+    return null;
   }
+
 
   try {
 
     const context =
       window.cast.framework.CastContext.getInstance();
 
+
+    await context.requestSession();
+
+
     const session =
       context.getCurrentSession();
+
 
     if (!session) {
 
       console.warn(
-        '⚠️ Nenhuma sessão Cast ativa.'
+        '⚠️ Sessão Cast não foi criada.'
       );
 
-      return;
+      return null;
     }
 
-    const mediaInfo =
-      new window.chrome.cast.media.MediaInfo(
-        videoUrl,
-        'video/mp4'
-      );
-
-    const request =
-      new window.chrome.cast.media.LoadRequest(
-        mediaInfo
-      );
-
-    await session.loadMedia(request);
 
     console.log(
-      '📺 Vídeo enviado para a TV'
+      '📺 Conectado ao Move Game Receiver!'
     );
+
+
+    return session;
+
 
   } catch (error) {
 
     console.error(
-      '❌ Erro ao enviar vídeo para o Chromecast:',
+      '❌ Erro ao conectar ao Chromecast:',
+      error
+    );
+
+    return null;
+
+  }
+
+}
+
+
+// ==========================================
+// ENVIAR MENSAGEM PARA A TV
+// ==========================================
+
+export async function sendCastMessage(
+  message: unknown
+) {
+
+  const session =
+    getCastSession();
+
+
+  if (!session) {
+
+    console.warn(
+      '⚠️ Nenhuma sessão Cast ativa.'
+    );
+
+    return;
+
+  }
+
+
+  try {
+
+    await session.sendMessage(
+      CAST_NAMESPACE,
+      message
+    );
+
+
+    console.log(
+      '📤 Mensagem enviada para a TV:',
+      message
+    );
+
+
+  } catch (error) {
+
+    console.error(
+      '❌ Erro ao enviar mensagem para a TV:',
       error
     );
 
   }
+
 }
 
+
+// ==========================================
+// ENCERRAR CAST
+// ==========================================
 
 export function stopCasting() {
 
@@ -121,17 +217,24 @@ export function stopCasting() {
     return;
   }
 
+
   const context =
     window.cast.framework.CastContext.getInstance();
+
 
   const session =
     context.getCurrentSession();
 
+
   if (session) {
+
     session.endSession(true);
+
 
     console.log(
       '📺 Transmissão encerrada'
     );
+
   }
+
 }
