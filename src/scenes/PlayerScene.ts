@@ -122,21 +122,21 @@ export const renderGame = async () => {
   }
 };
 
-function startPoseDetection(poseTracker: PoseTracker) {
-  const detect = () => {
-    const result = poseTracker.detect();
-
-    if (result?.landmarks?.length) {
-      const landmarks = result.landmarks[0];
-
-      checkFullBody(landmarks);
-    }
-
-    requestAnimationFrame(detect);
-  };
-
-  detect();
-}
+//function startPoseDetection(poseTracker: PoseTracker) {
+//  const detect = () => {
+//    const result = poseTracker.detect();
+//
+//    if (result?.landmarks?.length) {
+//      const landmarks = result.landmarks[0];
+//
+//      checkFullBody(landmarks);
+//    }
+//
+//    requestAnimationFrame(detect);
+//  };
+//
+//  detect();
+//}
 
 function isBodyInsideCamera(
   landmarks: NormalizedLandmark[]
