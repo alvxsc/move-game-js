@@ -1336,3 +1336,55 @@ code {
     bottom: 12px;
   }
 }
+
+#cast-container {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 10px;
+
+  margin-top: 20px;
+
+  color: rgba(255, 255, 255, 0.8);
+
+  font-size: 14px;
+}
+
+
+#ui-cast {
+  width: 42px;
+  height: 42px;
+
+  --connected-color: #a855f7;
+  --disconnected-color: white;
+
+  cursor: pointer;
+}
+
+#cast-container {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 10px;
+
+  margin-top: 20px;
+
+  color: rgba(255, 255, 255, 0.8);
+
+  font-size: 14px;
+}
+
+
+#ui-cast {
+  width: 42px;
+  height: 42px;
+
+  --connected-color: #a855f7;
+  --disconnected-color: white;
+
+  cursor: pointer;
+}

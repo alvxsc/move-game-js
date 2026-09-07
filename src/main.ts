@@ -5,6 +5,21 @@ import { renderLoadingScene } from './scenes/LoadingScene.ts';
 import { renderGame } from './scenes/PlayerScene.ts';
 import { renderGamePlay } from './scenes/GameScene.ts';
 
+import { initializeCast } from './cast/CastManager.ts';
+
+// ==========================================
+// GOOGLE CAST
+// ==========================================
+
+window.addEventListener(
+  'google-cast-available',
+  () => {
+
+    initializeCast();
+
+  }
+);
+
 function router() {
   const path = window.location.pathname;
 

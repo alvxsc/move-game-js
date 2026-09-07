@@ -1,5 +1,6 @@
 import '../style.css';
 import { StartGame } from '../components/ui.ts';
+import { initializeCast } from '../cast/CastManager.ts';
 
 const app = document.querySelector<HTMLDivElement>('#app')!;
 
@@ -21,6 +22,20 @@ export const renderMenu = () => {
         <button id="ui-settings" type="button" class="init-ui">
           Settings
         </button>
+      </div>
+
+      <!-- GOOGLE CAST -->
+
+      <div id="cast-container">
+
+        <google-cast-launcher
+          id="ui-cast"
+        ></google-cast-launcher>
+
+        <span>
+          Transmitir para TV
+        </span>
+
       </div>
     </section>
 
